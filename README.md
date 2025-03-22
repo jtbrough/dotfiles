@@ -1,14 +1,19 @@
 # dotfiles
 
+## Platforms
+[![Linux](https://img.shields.io/badge/Linux-Ready-orange?logo=linux&logoColor=white)](https://www.chezmoi.io/install)
+[![macOS](https://img.shields.io/badge/macOS-Ready-green?logo=apple&logoColor=white)](https://www.chezmoi.io/install)
+[![Windows](https://img.shields.io/badge/Windows-Soon-blue?logo=windows&logoColor=white)](https://www.chezmoi.io/install)
+
 ## New device setup
 https://www.chezmoi.io/install
 
-linux / macos
+Linux 🐧 / macOS 🍎
 ```
 sh -c "$(curl -fsLS get.chezmoi.io)"
 ```
 
-windows
+Windows🪟
 ```
 iex "&{$(irm 'https://get.chezmoi.io/ps1')}"
 ```

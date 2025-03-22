@@ -1,0 +1,68 @@
+{{ if eq .chezmoi.os "windows" -}}
+# PowerShell script to install packages using winget
+
+# Enable strict mode
+Set-StrictMode -Version Latest
+$ErrorActionPreference = "Stop"
+
+# Determine the context based on hostname
+$hostname = $env:COMPUTERNAME
+$context = "all"  # Default context
+{{- $devices := include ".chezmoidata/inventory.yml" | fromYaml }}
+{{- range $ctx, $hosts := $devices.devices }}
+{{- range $hosts }}
+if ($hostname -eq "{{ . }}") {
+    $context = "{{ $ctx }}"
+}
+{{- end }}
+{{- end }}
+
+Write-Host "################################################################################"
+Write-Host "########## Install packages via winget"
+Write-Host "########## Detected hostname: $hostname"
+Write-Host "########## Detected context: $context"
+
+# Function to install a package using winget
+function Install-WingetPackage {
+    param (
+        [string]$PackageId
+    )
+    if (-not (winget list --id $PackageId | Out-Null)) {
+        Write-Host "Installing $PackageId..."
+        winget install --id $PackageId --accept-source-agreements --accept-package-agreements
+    } else {
+        Write-Host "$PackageId is already installed."
+    }
+}
+
+# Install packages for the "all" context
+Write-Host "########## Installing packages for 'all' context..."
+{{- range .packages.all.windows.winget }}
+Install-WingetPackage "{{ . }}"
+{{- end }}
+{{- range .packages.all.windows.winget_store }}
+Install-WingetPackage "{{ . }}"
+{{- end }}
+
+# Install packages for the detected context
+if ($context -eq "personal") {
+    Write-Host "########## Installing packages for 'personal' context..."
+    {{- range .packages.personal.windows.winget }}
+    Install-WingetPackage "{{ . }}"
+    {{- end }}
+    {{- range .packages.personal.windows.winget_store }}
+    Install-WingetPackage "{{ . }}"
+    {{- end }}
+} elseif ($context -eq "work") {
+    Write-Host "########## Installing packages for 'work' context..."
+    {{- range .packages.work.windows.winget }}
+    Install-WingetPackage "{{ . }}"
+    {{- end }}
+    {{- range .packages.work.windows.winget_store }}
+    Install-WingetPackage "{{ . }}"
+    {{- end }}
+}
+
+Write-Host "########## winget package installation complete."
+Write-Host "################################################################################"
+{{ end }}

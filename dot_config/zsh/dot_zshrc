@@ -1,0 +1,58 @@
+#!/bin/sh
+
+# path
+export PATH=$HOME/bin:$PATH
+export PATH=$HOME/.local/bin:$PATH
+
+if [[ `uname`  == "Darwin"* ]]; then    
+    # trash-cli init
+    export PATH="/opt/homebrew/opt/trash-cli/bin:$PATH"
+fi
+
+# homebrew init
+    # https://brew.sh/
+    # /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    export HOMEBREW_NO_AUTO_UPDATE=1
+
+    if [[ `uname -m`  == "x86_64"* ]]; then    
+        eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+    fi
+
+    if [[ `uname`  == "Darwin"* ]]; then
+        eval "$(/opt/homebrew/bin/brew shellenv)"
+    fi
+
+# zsh-autocomplete and zsh-syntax-highlighting
+skip_global_compinit=1
+if [[ `uname -m`  == "x86_64"* ]]; then    
+    source /home/linuxbrew/.linuxbrew/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh
+    source /home/linuxbrew/.linuxbrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+fi
+
+if [[ `uname`  == "Darwin"* ]]; then    
+    source /opt/homebrew/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh
+    source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+fi
+
+# aliases
+source "$HOME/.config/zsh/.zsh-aliases"
+
+# exports
+source "$HOME/.config/zsh/.zsh-exports"
+
+# prompt
+    # https://starship.rs/
+    # brew install starship
+source "$HOME/.config/zsh/.zsh-prompt"
+
+# atuin init
+eval "$(atuin init zsh)"
+
+# zoxide init
+eval "$(zoxide init zsh)"
+
+# Basic zsh configuration
+HISTFILE=~/.zsh_history
+HISTSIZE=10000
+SAVEHIST=10000
+setopt appendhistory

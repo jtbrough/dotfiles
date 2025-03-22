@@ -1,0 +1,11 @@
+#!/bin/sh
+
+# starship
+export STARSHIP_CONFIG=~/.config/starship.toml
+
+if [[ `uname -m`  == "x86_64"* ]]; then    
+    eval -- "$(/home/linuxbrew/.linuxbrew/bin/starship init zsh --print-full-init)"
+fi
+if [[ `uname`  == "Darwin"* ]]; then    
+    eval -- "$(/opt/homebrew/bin/starship init zsh --print-full-init)"
+fi

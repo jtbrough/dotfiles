@@ -1,0 +1,78 @@
+format = """
+[](#3B4252)\
+$os\
+$shell\
+$hostname\
+[](fg:#3B4252 bg:#4C566A)\
+$username\
+[](fg:#4C566A bg:#1C354A)\
+$directory\
+[](fg:#1C354A bg:#67728E)\
+$git_branch\
+$git_status\
+[](fg:#67728E bg:#33658A)\
+$time\
+[ ](fg:#33658A)\
+"""
+command_timeout = 5000
+
+[os]
+format = '[$symbol ]($style)'
+style = "bg:#3B4252"
+disabled = false
+
+[os.symbols]
+Fedora = ""
+Macos = ""
+Ubuntu = ""
+Windows = ""
+
+[shell]
+bash_indicator = '󱆃'
+powershell_indicator = ''
+zsh_indicator = '󰰶'
+unknown_indicator = 'mystery shell'
+format = '[$indicator ]($style)'
+style = "bg:#3B4252"
+disabled = false
+
+[hostname]
+ssh_only = false
+ssh_symbol = '🌐 '
+trim_at = '.'
+format = '[$hostname]($style)'
+style = "bg:#3B4252"
+disabled = false
+
+[username]
+show_always = true
+style_user = "bg:#4C566A"
+style_root = "bg:#4C566A"
+format = '[$user ]($style)'
+
+[directory]
+style = "bg:#1C354A"
+format = "[ $path ]($style)"
+truncation_length = 3
+truncation_symbol = " … /"
+
+[directory.substitutions]
+"Documents" = "  "
+"Downloads" = "  "
+"Music" = "  "
+"Pictures" = "  "
+
+[git_branch]
+symbol = ""
+style = "bg:#67728E"
+format = '[ $symbol $branch ]($style)'
+
+[git_status]
+style = "bg:#67728E"
+format = '[$all_status$ahead_behind ]($style)'
+
+[time]
+disabled = false
+time_format = "%r" # Hour:Minute Format
+style = "bg:#33658A"
+format = '[ $time ]($style)'

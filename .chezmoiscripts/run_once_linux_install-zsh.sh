@@ -1,0 +1,14 @@
+#!/bin/bash
+echo "################################################################################"
+echo "########## Validate zsh is installed using apt"
+
+# install zsh
+if ! command -v zsh &> /dev/null; then
+    echo "########## Installing zsh" 
+    sudo apt-get update
+    sudo apt-get install -y zsh
+else
+    echo "########## zsh is already installed"
+fi
+
+echo "################################################################################"

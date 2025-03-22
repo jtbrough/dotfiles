@@ -1,0 +1,92 @@
+packages:
+################################################################################
+########## all
+########## packages to be installed on all device contexts
+################################################################################
+  all:
+    linux:
+      brews:
+      - 'age'
+      - 'atuin'
+      - 'bat'
+      - 'bitwarden-cli'
+      - 'eza'
+      - 'fastfetch'
+      - 'fzf'
+      - 'git'
+      - 'iperf3'
+      - 'starship'
+      - 'tldr'
+      - 'topgrade'
+      - 'trash-cli'
+      - 'zoxide'
+      - 'zsh-autocomplete'
+      - 'zsh-syntax-highlighting'
+    darwin:
+      brews:
+      - 'dockutil'
+      - 'git'
+      - 'mas'
+      casks:
+      - 'bitwarden'
+      taps:
+        - 'buo/cask-upgrade'
+      mas:
+    windows:
+      winget:
+      - 'ajeetdsouza.zoxide'
+      - 'Bitwarden.Bitwarden'
+      - 'Bitwarden.CLI'
+      - 'eza-community.eza'
+      - 'Fastfetch-cli.Fastfetch'      
+      - 'Git.Git'
+      - 'junegunn.fzf'
+      - 'Microsoft.PowerShell'
+      - 'Microsoft.PowerToys'
+      - 'Microsoft.VisualStudioCode'
+      - 'Notion.Notion'
+      - 'sharkdp.bat'
+      - 'Starship.Starship'
+      - 'topgrade-rs.topgrade'
+      - 'Warp.Warp'
+      winget_store:
+
+################################################################################
+########## personal
+########## packages to be installed on personal device contexts
+################################################################################
+
+  personal:
+    linux:
+      brews:
+    darwin:
+      brews:
+      casks:
+        - 'notion'
+      taps:
+      mas:
+    windows:
+      winget:
+        - 'Anthropic.Claude'
+        - 'Bambulab.Bambustudio'
+        - 'GitHub.GitHubDesktop'
+        - 'RaspberryPiFoundation.RaspberryPiImager'
+        - 'Rufus.Rufus'
+      winget-store:
+        - '9NT1R1C2HH7J' # ChatGPT
+
+################################################################################
+########## work
+########## packages to be installed on work device contexts
+################################################################################
+
+  work:
+    linux:
+      brews:
+    darwin:
+      brews:
+      casks:
+      taps:
+      mas:
+    windows:
+      winget:

@@ -1,0 +1,42 @@
+{{ if eq .chezmoi.os "linux" -}}
+#!/bin/bash
+
+set -euo pipefail
+
+# Check if running in WSL
+{{ if (.chezmoi.kernel.osrelease | lower | contains "microsoft") }}
+echo "################################################################################"
+echo "########## Running in WSL environment."
+
+# Check if wsl-hello-sudo is installed and configured
+if [[ -x "/usr/local/bin/wsl-hello-sudo" && -f "/etc/wsl-hello-sudo.json" ]]; then
+    if grep -q '"configured": true' /etc/wsl-hello-sudo.json; then
+        echo "wsl-hello-sudo is already installed and properly configured. No action needed."
+        exit 0
+    fi
+fi
+
+echo "########## wsl-hello-sudo not found or not properly configured. Installing wsl-hello-sudo..."
+
+# Download the latest release
+wget http://github.com/nullpo-head/WSL-Hello-sudo/releases/latest/download/release.tar.gz -O /tmp/release.tar.gz
+
+# Extract the release archive
+tar -xvf /tmp/release.tar.gz -C /tmp
+
+# Navigate to the extracted release directory
+cd /tmp/release
+
+# Run the installation script
+./install.sh
+
+echo "########## wsl-hello-sudo has been installed successfully."
+
+# Cleanup after install
+rm -rf /tmp/release
+rm /tmp/release.tar.gz
+
+echo "########## wsl-hello-sudo installation complete."
+echo "################################################################################"
+{{ end }}
+{{ end }}

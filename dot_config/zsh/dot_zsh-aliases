@@ -1,0 +1,45 @@
+#!/bin/sh
+
+# confirm before overwriting something
+alias cp="cp -i"
+alias mv='mv -i'
+alias rm='trash-put -i'
+
+# windows style
+alias cls="clear"
+
+# zoxide
+#alias cd="z"
+alias cdi="zi"
+
+# bat
+#alias cat="bat"
+
+# Colorize grep output (good for log files)
+alias grep='grep --color=auto'
+alias egrep='egrep --color=auto'
+alias fgrep='fgrep --color=auto'
+
+# vscode
+if [[ $(grep -i Microsoft /proc/version) ]]; then
+    # use default code.exe via wsl
+fi
+
+if [[ `uname`  == "Darwin"* ]]; then
+    # use default code executable in macOS
+fi
+
+if [[ $(uname) == "Linux"* ]]; then
+    if command -v flatpak >/dev/null 2>&1; then
+        if flatpak list | grep -q "com.visualstudio.code"; then
+            alias code="flatpak run com.visualstudio.code"
+        fi
+    fi
+fi
+
+# eza
+alias ls="eza --icons --group-directories-first -lhF"
+alias ll="eza --icons --group-directories-first -alhF"
+
+# m4b-tool
+# alias m4b-tool='docker run -it --rm -v "$(pwd)":/mnt sandreas/m4b-tool:latest'

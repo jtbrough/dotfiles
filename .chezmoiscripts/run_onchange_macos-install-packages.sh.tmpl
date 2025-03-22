@@ -1,0 +1,68 @@
+{{ if eq .chezmoi.os "darwin" -}}
+#!/bin/bash
+
+set -euo pipefail
+
+# Determine the context based on hostname
+hostname=$(hostname)
+context="all"  # Default context
+{{- $devices := include ".chezmoidata/inventory.yml" | fromYaml }}
+{{- range $ctx, $hosts := $devices.devices }}
+{{- range $hosts }}
+if [[ "$hostname" == "{{ . }}" ]]; then
+    context="{{ $ctx }}"
+fi
+{{- end }}
+{{- end }}
+
+echo "################################################################################"
+echo "########## Install packages via homebrew"
+echo "########## Detected hostname: $hostname"
+echo "########## Detected context: $context"
+
+# Install packages for the "all" context
+echo "########## Installing packages for 'all' context..."
+brew bundle --file=/dev/stdin <<EOF
+{{- range .packages.all.darwin.taps }}
+tap {{ . | quote }}
+{{- end }}
+{{- range .packages.all.darwin.brews }}
+brew {{ . | quote }}
+{{- end }}
+{{ range .packages.all.darwin.casks -}}
+cask {{ . | quote }}
+{{ end -}}
+EOF
+
+# Install packages for the detected context
+if [[ "$context" == "personal" ]]; then
+    echo "########## Installing packages for 'personal' context..."
+    brew bundle --file=/dev/stdin <<EOF
+{{- range .packages.personal.darwin.taps }}
+tap {{ . | quote }}
+{{- end }}
+{{- range .packages.personal.darwin.brews }}
+brew {{ . | quote }}
+{{- end }}
+{{ range .packages.personal.darwin.casks -}}
+cask {{ . | quote }}
+{{ end -}}
+EOF
+elif [[ "$context" == "work" ]]; then
+    echo "########## Installing packages for 'work' context..."
+    brew bundle --file=/dev/stdin <<EOF
+{{- range .packages.work.darwin.taps }}
+tap {{ . | quote }}
+{{- end }}
+{{- range .packages.work.darwin.brews }}
+brew {{ . | quote }}
+{{- end }}
+{{ range .packages.work.darwin.casks -}}
+cask {{ . | quote }}
+{{ end -}}
+EOF
+fi
+
+echo "########## Package installation complete."
+echo "################################################################################"
+{{ end }}

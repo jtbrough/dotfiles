@@ -1,0 +1,46 @@
+{{ if or (eq .chezmoi.os "linux") (eq .chezmoi.os "darwin") -}}
+#!/bin/bash
+
+# Linux and macOS-specific script for decrypting the private key
+if [ ! -f "${HOME}/.config/chezmoi/key.txt" ]; then
+    echo "Decrypting private key on Linux/macOS..."
+    mkdir -p "${HOME}/.config/chezmoi"
+    chezmoi age decrypt --output "${HOME}/.config/chezmoi/key.txt" "${HOME}/.config/age/key.txt.age"
+    if [ $? -ne 0 ]; then
+        echo "Failed to decrypt the private key. Exiting."
+        exit 1
+    fi
+    chmod 600 "${HOME}/.config/chezmoi/key.txt"
+    echo "Decrypted private key to ${HOME}/.config/chezmoi/key.txt"
+else
+    echo "Private key already exists at ${HOME}/.config/chezmoi/key.txt. Skipping decryption."
+fi
+
+{{ else if eq .chezmoi.os "windows" -}}
+# PowerShell script for Windows
+Write-Host "Running on Windows..."
+
+$KeyPath = "$HOME\.config\chezmoi\key.txt"
+$EncryptedKeyPath = "$HOME\.config\age\key.txt.age"
+
+if (-not (Test-Path -Path $KeyPath)) {
+    Write-Host "Decrypting private key on Windows..."
+    New-Item -ItemType Directory -Force -Path (Split-Path $KeyPath) | Out-Null
+    chezmoi age decrypt --output $KeyPath $EncryptedKeyPath
+    if ($LASTEXITCODE -ne 0) {
+        Write-Host "Failed to decrypt the private key. Exiting."
+        exit 1
+    }
+    icacls $KeyPath /inheritance:r /grant:r "$($env:USERNAME):(F)" | Out-Null
+    Write-Host "Decrypted private key to $KeyPath"
+} else {
+    Write-Host "Private key already exists at $KeyPath. Skipping decryption."
+}
+
+{{ else -}}
+#!/bin/bash
+
+# Unsupported OS
+echo "Unsupported operating system. Exiting."
+exit 1
+{{ end }}

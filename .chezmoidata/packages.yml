@@ -49,7 +49,6 @@ packages:
       - 'Starship.Starship'
       - 'topgrade-rs.topgrade'
       - 'Warp.Warp'
-      winget_store:
 
 ################################################################################
 ########## personal

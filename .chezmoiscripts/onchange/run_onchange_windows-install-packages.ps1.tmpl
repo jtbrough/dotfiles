@@ -40,9 +40,6 @@ Write-Host "########## Installing packages for 'all' context..."
 {{- range .packages.all.windows.winget }}
 Install-WingetPackage "{{ . }}"
 {{- end }}
-{{- range .packages.all.windows.winget_store }}
-Install-WingetPackage "{{ . }}"
-{{- end }}
 
 # Install packages for the detected context
 if ($context -eq "personal") {
@@ -50,15 +47,9 @@ if ($context -eq "personal") {
     {{- range .packages.personal.windows.winget }}
     Install-WingetPackage "{{ . }}"
     {{- end }}
-    {{- range .packages.personal.windows.winget_store }}
-    Install-WingetPackage "{{ . }}"
-    {{- end }}
 } elseif ($context -eq "work") {
     Write-Host "########## Installing packages for 'work' context..."
     {{- range .packages.work.windows.winget }}
-    Install-WingetPackage "{{ . }}"
-    {{- end }}
-    {{- range .packages.work.windows.winget_store }}
     Install-WingetPackage "{{ . }}"
     {{- end }}
 }

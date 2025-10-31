@@ -15,7 +15,7 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/jtbrough/dotfiles/main/dot
 
 Windows 🪟
 ```
-iex "&{$(irm '[https://get.chezmoi.io/ps1](https://raw.githubusercontent.com/jtbrough/dotfiles/main/dot_config/chezmoi/bootstrap.ps1')}"
+iex "&{$(irm 'https://raw.githubusercontent.com/jtbrough/dotfiles/main/dot_config/chezmoi/bootstrap.ps1')}"
 ```
 
 ```

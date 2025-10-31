@@ -10,16 +10,16 @@ https://www.chezmoi.io/install
 
 Linux 🐧 / macOS 🍎
 ```
-sh -c "$(curl -fsLS get.chezmoi.io)"
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/jtbrough/dotfiles/main/dot_config/chezmoi/bootstrap.sh)"
 ```
 
 Windows 🪟
 ```
-iex "&{$(irm 'https://get.chezmoi.io/ps1')}"
+iex "&{$(irm '[https://get.chezmoi.io/ps1](https://raw.githubusercontent.com/jtbrough/dotfiles/main/dot_config/chezmoi/bootstrap.ps1')}"
 ```
 
 ```
-chezmoi init git@github.com:jtbrough/dotfiles.git
+chezmoi init jtbrough
 ```
 
 ## Pull updates from github and apply them

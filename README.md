@@ -13,7 +13,7 @@ Linux 🐧 / macOS 🍎
 sh -c "$(curl -fsLS get.chezmoi.io)"
 ```
 
-Windows🪟
+Windows 🪟
 ```
 iex "&{$(irm 'https://get.chezmoi.io/ps1')}"
 ```

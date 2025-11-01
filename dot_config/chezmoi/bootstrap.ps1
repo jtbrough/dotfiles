@@ -29,6 +29,7 @@ function Install-Chezmoi {
         winget install --id twpayne.chezmoi -e --accept-source-agreements --accept-package-agreements
         # Refresh PATH from system + user environment
         $env:Path = [System.Environment]::GetEnvironmentVariable('Path', 'Machine') + ';' + [System.Environment]::GetEnvironmentVariable('Path', 'User')
+        Write-Host "Path refreshed."
     }
     elseif (Get-Command choco -ErrorAction SilentlyContinue) {
         Write-Host "Installing chezmoi via Chocolatey..."
